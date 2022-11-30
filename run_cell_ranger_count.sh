@@ -46,10 +46,9 @@ time cellranger count \
       --fastqs=$fastqlist \
       --sample=$sample \
       --chemistry=SC3Pv3 \
-	--include-introns \
       --transcriptome=$transcriptome \
       --localcores=15 --localmem=80 --localvmem=105
-"  
+"
     fi
 done
 
