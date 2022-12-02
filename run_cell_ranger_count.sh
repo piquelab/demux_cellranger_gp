@@ -11,15 +11,16 @@ echo $PWD
 ## Can use this one as an argument. 
 ##fastqfolder=../fastq/HV2LVBGXG/
 ##fastqfolder=../fastq/0H2JCYBGXG/
-fastqfolder=../fastq_merge/
-
+##fastqfolder=/wsu/home/groups/prbgenomics/guineapig/decidua/Rawdata/
+fastqfolder=../fastqs/
 
 ##transcriptome=/nfs/rprdata/refGenome10x/refdata-cellranger-hg19-1.2.0/
 ##transcriptome=/nfs/rprdata/refGenome10x/refdata-cellranger-GRCh38-3.0.0/
 ##transcriptome=/wsu/home/groups/piquelab/data/refGenome10x/refdata-cellranger-GRCh38-3.0.0/
 ##wsu`transcriptome=/wsu/home/groups/piquelab/data/refGenome11x/refdata-cellranger-hg19-3.0.0/
 ##transcriptome=/wsu/home/groups/piquelab/data/refGenome11x/refdata-gex-mm10-2020-A/
-transcriptome=/wsu/home/groups/piquelab/data/refGenome10x/refdata-gex-GRCh38-2020-A/
+##transcriptome=/wsu/home/groups/piquelab/data/refGenome10x/refdata-gex-GRCh38-2020-A/
+transcriptome=/wsu/home/groups/prbgenomics/guineapig/demux_cellranger_gp/ref/Cavpor3
 
 
 if [ ! -f "libList.txt" ]; then
@@ -39,8 +40,8 @@ do
 	fastqs=`find ${fastqfolder} -name "${sample}_*fastq.gz" | sed "s/\/${sample}_S.*//" | sort | uniq`
 	fastqlist=`echo ${fastqs} | tr ' ' ,`
 	echo $fastqlist
-	sbatch -q express -n 16 -N 1-1 --mem=110G -t 2000 -J $sample -o slurm.$sample.out  --wrap "
-module load bcl2fastq cellranger; 
+	sbatch -q primary -n 16 -N 1-1 --mem=110G -t 8000 -J $sample -o slurm.$sample.out  --wrap "
+module load cellranger; 
 time cellranger count \
       --id=$sample \
       --fastqs=$fastqlist \
